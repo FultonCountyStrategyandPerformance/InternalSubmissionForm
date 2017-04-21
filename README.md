@@ -9,7 +9,8 @@ Found in helpers/Connection.php, requires:
 $serverName="";
 $user='';
 $password='';
-$database="";```
+$database="";
+```
 
 ### PHP Server
 I highly suggest [MAMP](https://www.mamp.info/en/downloads/) as a quick and easy way to set up a PHP server
@@ -19,4 +20,5 @@ Found in index.php under the Constants, requires:
 ```php
 $performance_departments = "";
 $performance_program_kpis = "";
-$performance_program_values = "";```
+$performance_program_values = "";
+```
