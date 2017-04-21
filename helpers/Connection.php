@@ -1,6 +1,6 @@
 <?php
 // Server Settings
-$serverName="test";
+$serverName="";
 $user='';
 $password='';
 $database="";
