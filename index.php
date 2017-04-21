@@ -12,9 +12,9 @@ ini_set('display_errors', 'on');
 
 // Constants
 // Database tables
-$performance_departments = "fulton_county.dbo.PerformanceManagement_Departments";
-$performance_program_kpis = "fulton_county.dbo.PerformanceManagement_ProgramKPIs";
-$performance_program_values = "fulton_county.dbo.PerformanceManagement_ProgramValues";
+$performance_departments = "";
+$performance_program_kpis = "";
+$performance_program_values = "";
 
 // Timelines
 $quarter_list = array("01"=>1,"02"=>1,"03"=>1,"04"=>1);
