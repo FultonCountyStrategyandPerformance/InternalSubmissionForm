@@ -5,18 +5,18 @@ The internal KPI and Initiatives webform used for departmental KPI value updates
 
 ### Database Connection
 Found in helpers/Connection.php, requires:
-`php
+```php
 $serverName="";
 $user='';
 $password='';
-$database="";`
+$database="";```
 
 ### PHP Server
 I highly suggest [MAMP](https://www.mamp.info/en/downloads/) as a quick and easy way to set up a PHP server
 
 ### Database tables
 Found in index.php under the Constants, requires:
-`php
+```php
 $performance_departments = "";
 $performance_program_kpis = "";
-$performance_program_values = "";`
+$performance_program_values = "";```
