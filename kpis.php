@@ -87,15 +87,7 @@ echo "</fieldset><br />";
 
 echo '<fieldset><legend><span class="number">2</span>KPI Information</legend>';
 // The KPI's for that department and their values
-if(isset($_POST['department'])) {
-  // echo "<input type='submit' name='btnsubmit'>";
-  // Get the specific KPIs for the chosen Department
-  include('helpers/departmentKPIS.php');
-}
-elseif (!isset($_POST['department'])) {
-  // Autoselect the first Department and get its KPI's
-  include('helpers/defaultKPIS.php');
-}
+include('helpers/defaultKPIS.php');
 
 
 // Close the fieldset, form, div, body and html

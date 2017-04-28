@@ -47,7 +47,7 @@
               if(!$kpi_result) {
                 echo odbc_errormsg();
               }
-              $grid = "<table><tr><th>Measure</th><th>Value</th></tr>";
+              $grid = "<table><tr><th>Measure</th><th>Value</th><th>Unit</th></tr>";
               while($row = odbc_fetch_array($kpi_result)) {
 
                   $q = "SELECT * FROM ".$performance_program_values."
@@ -63,7 +63,7 @@
                     $r = odbc_exec($conn, $q);
                     $v = odbc_fetch_array($r, 1);
                     $grid .= "<tr><td class='tooltip'>".$row['MeasureName']."<span class='tooltiptext'>".$row['Description']."</span></td><td>".
-                    "<input name='kpi_values[".round($row['MeasureID'])."]' type='number' value='".$v['Value']."'/></td></tr>";
+                    "<input name='kpi_values[".round($row['MeasureID'])."]' type='number' value='".$v['Value']."'/></td><td id='unit'>".$v["ValueType"]."</td></tr>";
                   }
               }
               $grid .= "</table>";

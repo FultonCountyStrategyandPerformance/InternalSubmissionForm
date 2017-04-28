@@ -31,12 +31,17 @@ $kpi_values = array();
 include('helpers/Connection.php');
 
 // Show login screen if no user is set
-if(!isset($_COOKIE['username'])) {
+if(!isset($_POST['user']) && !isset($_COOKIE['username'])) {
   include('helpers/login.php');
 }
 else {
   include('helpers/loginValidation.php');
-  list($login, $user, $department) = validate($conn, $_COOKIE['username']);
+  if(isset($_COOKIE['username']))
+    list($login, $user, $department) = validate($conn, $_COOKIE['username']);
+  else if (isset($_POST['user'])){
+    list($login, $user, $department) = validate($conn, $_POST['user']);
+  }
+
   if(!$login) {
     echo $user." is not a valid user.";
   }

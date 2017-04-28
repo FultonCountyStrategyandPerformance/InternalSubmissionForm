@@ -7,6 +7,10 @@ html, body {
   text-align: center;
   margin: 0 auto;
 }
+#unit {
+  text-align: center;
+  vertical-align: text-top;
+}
 textarea {
   resize:vertical;
 }
