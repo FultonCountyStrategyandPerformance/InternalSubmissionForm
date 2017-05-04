@@ -4,7 +4,7 @@ The internal KPI and Initiatives webform used for departmental KPI value updates
 ## Initial Setup
 ### User Workflow Diagram
 
-![workflow]('/images/InputFormWorkflow.png')
+![workflow](/images/InputFormWorkflow.png)
 
 ### Database Connection
 Found in helpers/Connection.php, requires:
