@@ -12,43 +12,60 @@ ini_set('display_errors', 'on');
 
 // Constants
 // Database tables
-$performance_departments = "";
-$performance_program_kpis = "";
-$performance_program_values = "";
+// STAGING TABLES FOR USER INPUT
+$performance_program_values_staging = "PerformanceManagement_ProgramValues_staging";
 
-// Timelines
-$quarter_list = array("01"=>1,"02"=>1,"03"=>1,"04"=>1);
-$quarter = $quarter_list[date('m', time())];
-//echo $quarter;
-$fiscal_year = date('Y', time());
-//echo $fiscal_year;
-$kpi_values = array();
+// ADMIN TABLES FOR FINAL SUBMISSION
+$performance_program_values = "PerformanceManagement_ProgramValues";
 
+// QUARTER START DATES
+$performance_departments = "PerformanceManagement_Departments";
+$performance_program_kpis = "PerformanceManagement_ProgramKPIs";
+$performance_quarter_start_dates = "StartDates";
 
 // Include the connection string parameters
 // returns the $conn variable that is the
 // database connection
 include('helpers/Connection.php');
 
+// Timelines
+include('helpers/getCurrentQuarter.php');
+$quarter = getCurrentQuarter($conn, $performance_quarter_start_dates);
+
+$fiscal_year = date('Y', time());
+//echo $fiscal_year;
+$kpi_values = array();
+
+session_start();
+
+// LOGOUT
+if(isset($_POST['lgout'])) {
+  session_unset();
+  session_destroy();
+  header("Location: index.php");
+  header('HTTP/1.1 200 OK');
+}
+
+
 // Show login screen if no user is set
-if(!isset($_POST['user']) && !isset($_COOKIE['username'])) {
+if(!isset($_POST['user']) AND !isset($_SESSION["username"])){
   include('helpers/login.php');
 }
 else {
   include('helpers/loginValidation.php');
-  if(isset($_COOKIE['username']))
-    list($login, $user, $department) = validate($conn, $_COOKIE['username']);
+  if(isset($_SESSION['username']))
+    list($login, $user, $department,$_SESSION["isAdmin"]) = validate($conn, $_SESSION['username']);
   else if (isset($_POST['user'])){
-    list($login, $user, $department) = validate($conn, $_POST['user']);
+    list($login, $user, $department,$_SESSION["isAdmin"]) = validate($conn, $_POST['user']);
   }
 
   if(!$login) {
     echo $user." is not a valid user.";
+    echo "<br><button onclick='history.go(-1);'>back</button>";
   }
   else {
-    setcookie("username",$user,time()+60*60*7);
-    setcookie("department",$department,time()+60*60*7);
-
+    $_SESSION['username'] = $user;
+    $_SESSION['department'] = $department;
     // Redirect user to KPI after login
     include('kpis.php');
   }

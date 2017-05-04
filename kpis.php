@@ -1,13 +1,15 @@
 <?php
 
 // The Actual Program
-  // UPDATE FUNCTION
-  if(isset($_POST['btnsubmit'])) {
+  // UPDATE FUNCTIONS
+
+  // Staging Data Submission
+  if(isset($_POST['savesubmit'])) {
     // Including updateFunction from Helpers folder
     include('helpers/updateFunction.php');
 
     // Get result of update
-    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_POST['user'], $_POST['kpi_values'], $conn, $performance_program_values);
+    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $performance_program_values_staging);
 
     // Alert users to updated rows
     if($result) {
@@ -21,21 +23,40 @@
     }
   }
 
+  // Production Data Submission
+  if(isset($_POST['adminsubmit'])) {
+    // Including updateFunction from Helpers folder
+    include('helpers/updateFunction.php');
 
+    // Get result of update
+    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $performance_program_values);
+
+    // Alert users to updated rows
+    if($result) {
+      if($rows_updated == 0) {
+        echo "<script>alert('No changes made');</script>";
+      }
+      else {
+        echo "<script>alert('Updated ".$rows_updated." row(s) Successfully');</script>";
+      }
+
+    }
+  }
 // Initatives Link Button
-echo '<a href="initiatives.php" id="Link">Initiative Submission</a>';
+
 //
 //
 // Start of the form to update the database
 echo "<div class='form-style-5'>";
 echo "<form action='".htmlspecialchars($_SERVER["PHP_SELF"])."' method='post' autocomplete='off'>";
-
+echo "<div id='nav'><input class='submit' type='submit' value='logout' name='lgout'/>";
+echo "<a class='submit' href='initiatives.php' id='Link'>Initiative Submission</a></div>";
 // GENERAL INFORMATION
 echo '<fieldset><legend><span class="number">1</span> General Information</legend>';
 
 //Get the departments for that priority as a dropdown
   // The department query
-  $user_department = $_COOKIE['department'];
+  $user_department = $_SESSION['department'];
   $departments = "SELECT *
         FROM ".$performance_departments."
         WHERE DepartmentID = ".round($user_department)."
@@ -78,7 +99,7 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
 
   // Submitter of the form
   // Autofill with login value
-  echo "Editor<br>   <input type='text' name='user' placeholder='Editor' value='".$_COOKIE['username']."' readonly /><br>";
+  echo "Editor<br>   <input type='text' name='username' placeholder='Editor' value='".$_SESSION['username']."' readonly /><br>";
 
 
   echo '<div id="info"><div id="quarter"><h3>Current Quarter</h3> Q'.$quarter.'</div>';
@@ -87,7 +108,12 @@ echo "</fieldset><br />";
 
 echo '<fieldset><legend><span class="number">2</span>KPI Information</legend>';
 // The KPI's for that department and their values
-include('helpers/defaultKPIS.php');
+if($_SESSION["isAdmin"] == 1) {
+  include('helpers/adminKPIS_ProgramBreakdown.php');
+}
+else {
+  include('helpers/defaultKPIS_ProgramBreakdown.php');
+}
 
 
 // Close the fieldset, form, div, body and html

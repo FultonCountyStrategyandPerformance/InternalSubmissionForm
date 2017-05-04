@@ -1,6 +1,6 @@
 <?php
 function validate($conn, $user) {
-  $user_query = "SELECT username, departmentID
+  $user_query = "SELECT *
     FROM fulton_county.dbo.users
     WHERE username like '".$user."'";
   echo '<script>console.log(`'.$user_query.'`)</script>';
@@ -10,7 +10,7 @@ function validate($conn, $user) {
   }
   else {
     $department = odbc_fetch_array($user_result,1);
-    return array (true, $user, $department['departmentID']);
+    return array (true, $user, $department['DepartmentID'],$department["DepartmentHead"]);
   }
 }
 ?>

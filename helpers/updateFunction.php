@@ -47,8 +47,8 @@ function constructKPIQuery($table,$fiscal_year, $quarter, $date, $editor, $measu
     AND MeasureID = ".$measureID."\n";
   // If not Create it
   $query .= "ELSE INSERT INTO ".$table."
-    (MeasureID, Year, Quarter, ValueType, LastEdit, Editor, Value)
-    VALUES (".$measureID.",".$fiscal_year.",".$quarter.","."''".",'".$date."','".$editor."',".$value.");\n";
+    (MeasureID, Year, Quarter, LastEdit, Editor, Value)
+    VALUES (".$measureID.",".$fiscal_year.",".$quarter.",'".$date."','".$editor."',".$value.");\n";
   return $query;
 }
 

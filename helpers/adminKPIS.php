@@ -67,7 +67,7 @@
                 $grid .= "</table>";
               }
           echo $grid;
-          echo "<input class='submit' type='submit' value='save' name='savesubmit'>";
+          echo "<input class='submit' type='submit' name='btnsubmit'>";
     }
     //
 ?>
