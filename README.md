@@ -4,7 +4,7 @@ The internal KPI and Initiatives webform used for departmental KPI value updates
 ## Initial Setup
 
 ### Database Connection
-Found in helpers/Connection.php, requires:
+Found in [helpers/Connection.php](https://github.com/FultonCountyStrategyandPerformance/InternalSubmissionForm/blob/master/helpers/Connection.php), requires:
 ```php
 $serverName="";
 $user='';
