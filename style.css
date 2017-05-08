@@ -166,6 +166,42 @@ table.initiativesTable textarea {
     background: #109177;
 }
 
+.validation {
+  position: relative;
+}
+
+.validation .validtext {
+    visibility: hidden;
+    width: 250px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 2;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.validation .validtext::after {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.validation:hover .validtext {
+    visibility: visible;
+    opacity: 1;
+}
+
 .tooltip {
     position: relative;
     display: inline-block;

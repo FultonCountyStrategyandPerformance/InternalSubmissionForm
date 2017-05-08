@@ -11,6 +11,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 
 // Constants
+$percent_warning_text = "Warn: Percent over 100";
+$count_warning_text = "Warn: Number significantly different from the average";
 // Database tables
 // STAGING TABLES FOR USER INPUT
 $performance_program_values_staging = "PerformanceManagement_ProgramValues_staging";
@@ -49,7 +51,7 @@ if(isset($_POST['lgout'])) {
 
 // Show login screen if no user is set
 if(!isset($_POST['user']) AND !isset($_SESSION["username"])){
-  include('helpers/login.php');
+  include('pages/login.php');
 }
 else {
   include('helpers/loginValidation.php');
@@ -66,6 +68,7 @@ else {
   else {
     $_SESSION['username'] = $user;
     $_SESSION['department'] = $department;
+
     // Redirect user to KPI after login
     include('kpis.php');
   }

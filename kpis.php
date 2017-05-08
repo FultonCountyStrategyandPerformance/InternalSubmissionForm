@@ -29,6 +29,7 @@
     include('helpers/updateFunction.php');
 
     // Get result of update
+    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $performance_program_values_staging);
     list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $performance_program_values);
 
     // Alert users to updated rows
@@ -42,15 +43,18 @@
 
     }
   }
-// Initatives Link Button
 
 //
-//
-// Start of the form to update the database
 echo "<div class='form-style-5'>";
-echo "<form action='".htmlspecialchars($_SERVER["PHP_SELF"])."' method='post' autocomplete='off'>";
+//
+// Logout Form and link to initiatives
+echo "<form action='".htmlspecialchars($_SERVER['PHP_SELF'])."' method='post'>";
 echo "<div id='nav'><input class='submit' type='submit' value='logout' name='lgout'/>";
 echo "<a class='submit' href='initiatives.php' id='Link'>Initiative Submission</a></div>";
+echo "</form>";
+//
+// Start of the form to update the database
+echo "<form name='kpiform' action='".htmlspecialchars($_SERVER["PHP_SELF"])."' method='post' autocomplete='off' onsubmit=''>";
 // GENERAL INFORMATION
 echo '<fieldset><legend><span class="number">1</span> General Information</legend>';
 
@@ -63,39 +67,62 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
         ORDER BY DepartmentID ASC";
 
   $department_result = odbc_exec($conn, $departments);
-
   // Handle execution error
   if(!$department_result) {
     echo "ERROR GETTING DEPARTMENT RESULT";
     echo odbc_errormsg();
   }
+  $department = odbc_fetch_array($department_result,1);
+
+  // Get the Acceptable Values for count measures:
+  // the average and standard deviation are used
+  include('helpers/acceptableValues.php');
+  $acceptable_values = acceptableValues($conn, $department['DepartmentID'], $performance_program_values_staging, $performance_program_kpis, $quarter, $fiscal_year);
+  echo "<script>
+  $(document).ready(function(){
+    $('.validation').hover(function(){ $('.validtext').css('visibility','hidden');});
+    var acceptableValues = ".json_encode($acceptable_values).";
+    $('input[type=number]').change(function(e){
+      console.log(e);
+    if(e['target']['className'] == 'percent') {
+      var value = e['target']['value'];
+      var measureId = e['target']['id'];
+      var max = 100;
+      var min = 0;
+      console.log(value);
+      if(value < min || value > max) {
+        $('#'+measureId).hover(function(){ $('.validtext').css('visibility','visible'); });
+        $('#'+measureId).css('background-color','#ff9999');
+      }
+      else {
+        $('#'+measureId).hover(function(){ $('.validtext').css('visibility','hidden'); });
+        $('#'+measureId).css('background-color','#d2d9dd');
+      }
+    }
+    else {
+      var value = e['target']['value'];
+      var measureId = e['target']['id'];
+      var min = parseFloat(acceptableValues[measureId]['Avg'])-parseFloat(acceptableValues[measureId]['StdDev']);
+      var max = parseFloat(acceptableValues[measureId]['Avg'])+parseFloat(acceptableValues[measureId]['StdDev']);
+      if(value < min || value > max) {
+        $('#'+measureId).hover(function(){ $('.validtext').css('visibility','visible');});
+        $('#'+measureId).css('background-color','#ff9999');
+      }
+      else {
+        $('#'+measureId).hover(function(){ $('.validtext').css('visibility','hidden');});
+        $('#'+measureId).css('background-color','#d2d9dd');
+      }
+    }
+    });
+  });</script>";
 
   // Department Selection Dropdown
   echo "Departments<br />";
-  echo "<select name='department' onchange='javascript: form.submit();'>";
-  $menu="";
+  echo "<select name='department'>";
 
-  // If the department is already selected, keep it selected
-  // otherwise list the departments for the priority
-  if(isset($_POST['department'])) {
-      while($row = odbc_fetch_array($department_result)){
-          if($row['DepartmentID'] == $_POST['department']) {
-              $menu.='<option value="'.$row['DepartmentID'].'" selected="selected">'.$row['Department']."</option>";
-          }
-          else {
-              $menu.='<option value="'.$row['DepartmentID'].'">'.$row['Department']."</option>";
-          }
-      }
-      echo $menu;
-      echo "</select><br>";
-  }
-  else {
-      while($row = odbc_fetch_array($department_result)){
-          $menu.='<option value="'.$row['DepartmentID'].'">'.$row['Department']."</option>";
-      }
-      echo $menu;
-      echo "</select><br>";
-  }
+  $menu = '<option value="'.$department['DepartmentID'].'" selected="selected">'.$department['Department']."</option>";
+  echo $menu;
+  echo "</select><br>";
 
   // Submitter of the form
   // Autofill with login value
@@ -106,13 +133,17 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
   echo '<div><h3>Current Fiscal Year</h3> FY '.$fiscal_year.'</div></div>';
 echo "</fieldset><br />";
 
+
+// KPI Indicators Fieldset
 echo '<fieldset><legend><span class="number">2</span>KPI Information</legend>';
 // The KPI's for that department and their values
+// Get the Department
+
 if($_SESSION["isAdmin"] == 1) {
-  include('helpers/adminKPIS_ProgramBreakdown.php');
+  include('pages/adminKPIS_ProgramBreakdown.php');
 }
 else {
-  include('helpers/defaultKPIS_ProgramBreakdown.php');
+  include('pages/defaultKPIS_ProgramBreakdown.php');
 }
 
 
