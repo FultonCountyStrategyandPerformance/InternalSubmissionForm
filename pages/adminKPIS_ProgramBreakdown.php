@@ -42,8 +42,14 @@
               else {
                 $r = sqlsrv_query($conn, $q);
                 $v = sqlsrv_fetch_array($r, 1);
-                $grid .= "<tr><td style='width:100%' class='tooltip'>".$row['MeasureName']."<span class='tooltiptext'>".$row['Description']."</span></td><td style='width:15%'>".
-                "<input name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".$v['Value']."'/></td><td style='width:10%' id='unit'>".$row["Unit"]."</td></tr>";
+                if($row['MeasureUnit'] == 'PERCENT') {
+                  $grid .= "<tr><td style='width:100%' class='tooltip'>".$row['MeasureName']."<span class='tooltiptext'>".$row['Description']."</span></td><td class='validation' style='width:15%'>".
+                  "<input id='".round($row['MeasureID'])."' class='percent' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".$v['Value']."' required/><span class='validtext'>".$percent_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
+                }
+                else {
+                  $grid .= "<tr><td style='width:100%' class='tooltip'>".$row['MeasureName']."<span class='tooltiptext'>".$row['Description']."</span></td><td class='validation' style='width:15%'>".
+                  "<input id='".round($row['MeasureID'])."' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".$v['Value']."' required/><span class='validtext'>".$count_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
+                }
               }
           }
           $grid .= "</table>";
