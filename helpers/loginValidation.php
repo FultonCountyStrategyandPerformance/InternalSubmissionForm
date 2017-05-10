@@ -5,8 +5,12 @@ function validate($conn, $user, $password, $users_table) {
     WHERE user_name like '".$user."' AND user_password = '".$password."'";
   echo "<script>console.log('".$user_query."')</script>";
   $user_result = sqlsrv_query($conn, $user_query);
-  if(!$user_result) {
-    echo sqlsrv_errors();
+  if( ($errors = sqlsrv_errors() ) != null) {
+      foreach( $errors as $error ) {
+          echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+          echo "code: ".$error[ 'code']."<br />";
+          echo "message: ".$error[ 'message']."<br />";
+      }
   }
   if(sqlsrv_num_rows($user_result) == 0) {
     return array (false, $user,"", "NONE", 0);
