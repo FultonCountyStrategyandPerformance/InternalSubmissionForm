@@ -1,8 +1,8 @@
 <?php function acceptableValues($conn, $department, $staging_table, $kpi_table, $quarter, $year) {
   $deviation_array = array();
   $deviation_query = constructDeviationQuery($department, $staging_table, $kpi_table, $quarter, $year);
-  $deviation_result = odbc_exec($conn, $deviation_query);
-  while($row = odbc_fetch_array($deviation_result)){
+  $deviation_result = sqlsrv_query($conn, $deviation_query);
+  while($row = sqlsrv_fetch_array($deviation_result)){
     $deviation_array[$row['MeasureID']] = array();
     $deviation_array[$row['MeasureID']]['StdDev'] = $row['StdDev'];
     $deviation_array[$row['MeasureID']]['Avg'] = $row['Average'];

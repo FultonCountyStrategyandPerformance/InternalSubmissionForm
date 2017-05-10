@@ -67,11 +67,16 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
         ORDER BY DepartmentID ASC";
 
   $department_result = sqlsrv_query($conn, $departments);
-  // Handle execution error
-  if(!$department_result) {
+  // Handle execution error    
+  if( ($errors = sqlsrv_errors() ) != null) {
     echo "ERROR GETTING DEPARTMENT RESULT";
-    echo sqlsrv_errors();
+      foreach( $errors as $error ) {
+          echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+          echo "code: ".$error[ 'code']."<br />";
+          echo "message: ".$error[ 'message']."<br />";
+      }
   }
+
   $department = sqlsrv_fetch_array($department_result,1);
 
   // Get the Acceptable Values for count measures:
