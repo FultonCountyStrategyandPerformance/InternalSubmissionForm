@@ -65,9 +65,9 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
         FROM ".$performance_departments."
         WHERE DepartmentID = ".round($user_department)."
         ORDER BY DepartmentID ASC";
-
+  echo "<script>console.log('".$departments."')</script>";
   $department_result = sqlsrv_query($conn, $departments);
-  // Handle execution error    
+  // Handle execution error
   if( ($errors = sqlsrv_errors() ) != null) {
     echo "ERROR GETTING DEPARTMENT RESULT";
       foreach( $errors as $error ) {

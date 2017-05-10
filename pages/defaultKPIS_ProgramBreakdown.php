@@ -7,8 +7,13 @@
 
     $program_result = sqlsrv_query($conn, $programs);
     // Handle any Errors
-    if(!$program_result) {
-      echo sqlsrv_errors();
+    if( ($errors = sqlsrv_errors() ) != null) {
+      echo "ERROR GETTING DEPARTMENT RESULT";
+        foreach( $errors as $error ) {
+            echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+            echo "code: ".$error[ 'code']."<br />";
+            echo "message: ".$error[ 'message']."<br />";
+        }
     }
 
     // Check if there are any kpis
@@ -27,8 +32,13 @@
           AND Active = 1";
 
           $kpi_result = sqlsrv_query($conn, $kpis);
-          if(!$kpi_result) {
-            echo sqlsrv_errors();
+          if( ($errors = sqlsrv_errors() ) != null) {
+            echo "ERROR GETTING DEPARTMENT RESULT";
+              foreach( $errors as $error ) {
+                  echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+                  echo "code: ".$error[ 'code']."<br />";
+                  echo "message: ".$error[ 'message']."<br />";
+              }
           }
           $grid = "<table><tr><th>Measure</th><th>Value</th><th>Unit</th></tr>";
           while($row = sqlsrv_fetch_array($kpi_result)) {
