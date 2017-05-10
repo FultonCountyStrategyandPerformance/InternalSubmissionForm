@@ -12,15 +12,13 @@ function validate($conn, $user, $password, $users_table) {
           echo "message: ".$error[ 'message']."<br />";
       }
   }
-  if(sqlsrv_num_rows($user_result) == 0) {
-    while($row=sqlsrv_fetch_array($user_result)) {
-      echo $row['user_name'];
-    }
-    return array (false, $user,"", "NONE", 0);
-  }
-  else {
-    $department = sqlsrv_fetch_array($user_result,1);
-    return array (true, $user, $password,$department['department'],$department["department_head"]);
+  while($row=sqlsrv_fetch_array($user_result)) {
+      if($row['user_name']) {
+        return array (true, $user, $password,$department['department'],$department["department_head"]);
+      }
+      else {
+        return array (false, $user,"", "NONE", 0);
+      }
   }
 }
 ?>
