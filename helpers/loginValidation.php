@@ -3,7 +3,6 @@ function validate($conn, $user, $password, $users_table) {
   $user_query = "SELECT *
     FROM ".$users_table."
     WHERE user_name like '".$user."' AND user_password = '".$password."'";
-  echo "<script>console.log('".$user_query."')</script>";
   $user_result = sqlsrv_query($conn, $user_query);
   if( ($errors = sqlsrv_errors() ) != null) {
       foreach( $errors as $error ) {

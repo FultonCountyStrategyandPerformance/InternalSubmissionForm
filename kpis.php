@@ -65,7 +65,7 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
         FROM ".$performance_departments."
         WHERE DepartmentID = ".round($user_department)."
         ORDER BY DepartmentID ASC";
-  echo "<script>console.log('".$departments."')</script>";
+  echo "<script>console.log(`".$departments."`);</script>";
   $department_result = sqlsrv_query($conn, $departments);
   // Handle execution error
   if( ($errors = sqlsrv_errors() ) != null) {
@@ -76,13 +76,14 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
           echo "message: ".$error[ 'message']."<br />";
       }
   }
-
-  $department = sqlsrv_fetch_array($department_result,1);
+  while($row = sqlsrv_fetch_array($department_result)) {
+    $department_id = $row["DepartmentID"];
+  }
 
   // Get the Acceptable Values for count measures:
   // the average and standard deviation are used
-  include('helpers/acceptableValues.php');
-  $acceptable_values = acceptableValues($conn, $department['DepartmentID'], $performance_program_values_staging, $performance_program_kpis, $quarter, $fiscal_year);
+  /*include('helpers/acceptableValues.php');
+  $acceptable_values = acceptableValues($conn, $department_id, $performance_program_values_staging, $performance_program_kpis, $quarter, $fiscal_year);
   echo "<script>
   $(document).ready(function(){
     $('.validation').hover(function(){ $('.validtext').css('visibility','hidden');});
@@ -120,7 +121,7 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
     }
     });
   });</script>";
-
+  */
   // Department Selection Dropdown
   echo "Departments<br />";
   echo "<select name='department'>";
