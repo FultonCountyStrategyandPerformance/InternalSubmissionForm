@@ -37,12 +37,22 @@
           }
           $grid = "<table><tr><th>Measure</th><th>Value</th><th>Unit</th></tr>";
           while($row = sqlsrv_fetch_array($kpi_result)) {
-
-              $q = "SELECT * FROM ".$performance_program_values_staging."
+               $q = "SELECT * FROM ".$performance_program_values_staging."
                     WHERE  Year =".$fiscal_year."
                     AND Quarter =".$quarter."
                     AND MeasureID = ".round($row['MeasureID']);
-              $r = sqlsrv_query($conn, $q);
+                $r = sqlsrv_query($conn, $q);
+                if( ($errors = sqlsrv_errors() ) != null) {
+                  if($row['MeasureUnit'] == 'PERCENT') {
+                    $grid .= "<tr><td style='width:100%' class='tooltip'>".$row['MeasureName']."<span class='tooltiptext'>".$row['Description']."</span></td><td class='validation' style='width:15%'>".
+                    "<input id='".round($row['MeasureID'])."' class='percent' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='0' required/><span class='validtext'>".$percent_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
+                  }
+                  else {
+                    $grid .= "<tr><td style='width:100%' class='tooltip'>".$row['MeasureName']."<span class='tooltiptext'>".$row['Description']."</span></td><td class='validation' style='width:15%'>".
+                    "<input id='".round($row['MeasureID'])."' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='0' required/><span class='validtext'>".$count_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
+                  }
+                  continue;
+                }
                 $v = sqlsrv_fetch_array($r, 1);
                 if($row['MeasureUnit'] == 'PERCENT') {
                   $grid .= "<tr><td style='width:100%' class='tooltip'>".$row['MeasureName']."<span class='tooltiptext'>".$row['Description']."</span></td><td class='validation' style='width:15%'>".
