@@ -14,11 +14,7 @@
             echo "message: ".$error[ 'message']."<br />";
         }
     }
-
     // Check if there are any kpis
-    elseif(sqlsrv_num_rows($program_result) == 0) {
-        echo "No KPI's Available";
-    }
     else {
       while($program = sqlsrv_fetch_array($program_result)) {
         echo "<h4>".$program['Program']."</h4>";
