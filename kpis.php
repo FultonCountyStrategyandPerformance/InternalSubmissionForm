@@ -78,6 +78,7 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
   }
   while($row = sqlsrv_fetch_array($department_result)) {
     $department_id = $row["DepartmentID"];
+    $department_name = $row["Department"];
   }
 
   // Get the Acceptable Values for count measures:
@@ -126,7 +127,7 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
   echo "Departments<br />";
   echo "<select name='department'>";
 
-  $menu = '<option value="'.$department['DepartmentID'].'" selected="selected">'.$department['Department']."</option>";
+  $menu = '<option value="'.$department_id.'" selected="selected">'.$department_name."</option>";
   echo $menu;
   echo "</select><br>";
 
