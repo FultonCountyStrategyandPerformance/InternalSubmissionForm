@@ -13,6 +13,9 @@ function validate($conn, $user, $password, $users_table) {
       }
   }
   if(sqlsrv_num_rows($user_result) == 0) {
+    while($row=sqlsrv_fetch_array($user_result)) {
+      echo $row['user_name'];
+    }
     return array (false, $user,"", "NONE", 0);
   }
   else {
