@@ -2,8 +2,8 @@
     //
     $programs = "SELECT ProgramName
       FROM ".$performance_program_kpis."
-      WHERE DepartmentID=".round($department['DepartmentID'])." AND Active=1
-      GROUP BY ProgramName";
+      WHERE DepartmentID=".round($department_id)." AND Active=1
+      GROUP BY Program";
 
     $program_result = sqlsrv_query($conn, $programs);
     // Handle any Errors
@@ -12,18 +12,15 @@
     }
 
     // Check if there are any kpis
-    elseif(sqlsrv_num_rows($program_result) == 0) {
-        echo "No KPI's Available";
-    }
     else {
       while($program = sqlsrv_fetch_array($program_result)) {
-        echo "<h4>".$program['ProgramName']."</h4>";
+        echo "<h4>".$program['Program']."</h4>";
 
         // Get KPIs for that program
         $kpis = "SELECT *
           FROM ".$performance_program_kpis."
           WHERE DepartmentID=".round($department['DepartmentID'])."
-          AND ProgramName='".$program['ProgramName']."'
+          AND Program='".$program['Program']."'
           AND Active = 1";
 
           $kpi_result = sqlsrv_query($conn, $kpis);

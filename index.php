@@ -33,7 +33,7 @@ include('helpers/Connection.php');
 
 // Timelines
 include('helpers/getCurrentQuarter.php');
-$quarter = 1//getCurrentQuarter($conn, $performance_quarter_start_dates);
+$quarter = 1;//getCurrentQuarter($conn, $performance_quarter_start_dates);
 
 $fiscal_year = date('Y', time());
 //echo $fiscal_year;
