@@ -41,7 +41,7 @@
                     WHERE  Year =".$fiscal_year."
                     AND Quarter =".$quarter."
                     AND MeasureID = ".round($row['MeasureID']);
-                echo "<script>console.log(`".$q."`)";
+                echo "<script>console.log(`".$q."`)</script>";
                 $r = sqlsrv_query($conn, $q);
                 if( ($errors = sqlsrv_errors() ) != null) {
                   if($row['MeasureUnit'] == 'PERCENT') {
