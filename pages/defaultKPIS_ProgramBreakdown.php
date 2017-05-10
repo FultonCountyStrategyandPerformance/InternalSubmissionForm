@@ -2,13 +2,12 @@
     // Get all the KPI measure IDs and Names
     $programs = "SELECT ProgramName
       FROM ".$performance_program_kpis."
-      WHERE DepartmentID=".round($department['DepartmentID'])."
+      WHERE DepartmentID=".round($department_id)."
       GROUP BY ProgramName";
 
     $program_result = sqlsrv_query($conn, $programs);
     // Handle any Errors
     if( ($errors = sqlsrv_errors() ) != null) {
-      echo "ERROR GETTING DEPARTMENT RESULT";
         foreach( $errors as $error ) {
             echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
             echo "code: ".$error[ 'code']."<br />";
@@ -27,7 +26,7 @@
         // Get KPIs for that program
         $kpis = "SELECT *
           FROM ".$performance_program_kpis."
-          WHERE DepartmentID=".round($department['DepartmentID'])."
+          WHERE DepartmentID=".round($department_id)."
           AND ProgramName='".$program['ProgramName']."'
           AND Active = 1";
 
