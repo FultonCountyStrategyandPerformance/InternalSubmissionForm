@@ -14,7 +14,7 @@ function validate($conn, $user, $password, $users_table) {
   }
   while($row=sqlsrv_fetch_array($user_result)) {
       if($row['user_name']) {
-        return array (true, $user, $password,$department['department'],$department["department_head"]);
+        return array (true, $user, $password,$row['department'],$row["department_head"]);
       }
       else {
         return array (false, $user,"", "NONE", 0);
