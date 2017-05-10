@@ -15,16 +15,16 @@ $percent_warning_text = "Warn: Percent over 100";
 $count_warning_text = "Warn: Number significantly different from the average";
 // Database tables
 // STAGING TABLES FOR USER INPUT
-$performance_program_values_staging = "PerformanceManagement_ProgramValues_staging";
+$performance_program_values_staging = "edtables.dbo.PerformanceManagement_ProgramValues_staging";
 
 // ADMIN TABLES FOR FINAL SUBMISSION
-$performance_program_values = "PerformanceManagement_ProgramValues";
+$performance_program_values = "edtables.dbo.PerformanceManagement_ProgramValues";
 
 // ADDITIONAL TABLES
-$performance_departments = "PerformanceManagement_Departments";
-$performance_program_kpis = "PerformanceManagement_ProgramKPIs";
-$performance_quarter_start_dates = "StartDates";
-$users_table = "PerformanceManagement_Users";
+$performance_departments = "edtables.dbo.PerformanceManagement_Departments";
+$performance_program_kpis = "edtables.dbo.PerformanceManagement_ProgramKPIs";
+$performance_quarter_start_dates = "edtables.dbo.StartDates";
+$users_table = "edtables.dbo.PerformanceManagement_Users";
 
 // Include the connection string parameters
 // returns the $conn variable that is the
