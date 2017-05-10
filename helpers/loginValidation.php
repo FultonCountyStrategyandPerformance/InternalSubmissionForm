@@ -1,5 +1,5 @@
 <?php
-function validate($conn, $user, $password) {
+function validate($conn, $user, $password, $users_table) {
   $user_query = "SELECT *
     FROM ".$users_table."
     WHERE user_name like '".$user."' AND user_password = '".$password."'";

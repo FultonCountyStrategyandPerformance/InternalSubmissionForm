@@ -57,9 +57,9 @@ if(!isset($_POST['user']) AND !isset($_SESSION["username"])){
 else {
   include('helpers/loginValidation.php');
   if(isset($_SESSION['username']))
-    list($login, $user, $password, $department,$_SESSION["isAdmin"]) = validate($conn, $_SESSION['username'], $_SESSION['password']);
+    list($login, $user, $password, $department,$_SESSION["isAdmin"]) = validate($conn, $_SESSION['username'], $_SESSION['password'],$users_table);
   else if (isset($_POST['user'])){
-    list($login, $user, $password, $department,$_SESSION["isAdmin"]) = validate($conn, $_POST['user'], $_POST['password']);
+    list($login, $user, $password, $department,$_SESSION["isAdmin"]) = validate($conn, $_POST['user'], $_POST['password'],$users_table);
   }
 
   if(!$login) {
