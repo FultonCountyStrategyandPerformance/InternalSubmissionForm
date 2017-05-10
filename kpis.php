@@ -66,13 +66,13 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
         WHERE DepartmentID = ".round($user_department)."
         ORDER BY DepartmentID ASC";
 
-  $department_result = odbc_exec($conn, $departments);
+  $department_result = sqlsrv_query($conn, $departments);
   // Handle execution error
   if(!$department_result) {
     echo "ERROR GETTING DEPARTMENT RESULT";
-    echo odbc_errormsg();
+    echo sqlsrv_errors();
   }
-  $department = odbc_fetch_array($department_result,1);
+  $department = sqlsrv_fetch_array($department_result,1);
 
   // Get the Acceptable Values for count measures:
   // the average and standard deviation are used

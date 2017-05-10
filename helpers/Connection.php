@@ -1,11 +1,9 @@
 <?php
 // Server Settings
+$connectionInfo = array("UID"=>"", "PWD"=>"","Database"=>"")
 $serverName="";
-$user='';
-$password='';
-$database="";
-$conn = odbc_connect("Driver={SQL Server Native Client 10.0};Server=$serverName;Database=$database;", $user, $password);
+$conn = sqlsrv_connect($serverName, $connectionInfo);
 if(!$conn) {
-  die(odbc_errormsg());
+  die(sqlsrv_errors());
 }
 ?>

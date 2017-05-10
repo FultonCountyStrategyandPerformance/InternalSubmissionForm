@@ -82,9 +82,9 @@ if(isset($_POST['adminsubmit'])) {
 
 
 $initiative_query = "SELECT * FROM ".$performance_program_initiatives;
-$initiative_result = odbc_exec($conn, $initiative_query);
+$initiative_result = sqlsrv_query($conn, $initiative_query);
 if(!$initiative_result) {
-  echo odbc_errormsg();
+  echo sqlsrv_errors();
 }
 
 if(isset($_POST['initiative'])) {
@@ -104,7 +104,7 @@ echo '<div><h3>Current Fiscal Year</h3> FY '.$fiscal_year.'</div></div>';
 if($_SESSION['isAdmin'] == 1) {
   echo "<table class='initiativesTable'><tr><th>Initative</th><th>Budget</th><th>Impact Statement</th><th>Status</th></tr>";
 
-  while($row = odbc_fetch_array($initiative_result)) {
+  while($row = sqlsrv_fetch_array($initiative_result)) {
     echo '<script>console.log("'.$row['ID'].'")</script>';
     echo "<tr>";
     echo "<td><textarea name='init_values[1]'>".$row['Initiative']."</textarea></td>";
@@ -120,7 +120,7 @@ if($_SESSION['isAdmin'] == 1) {
 else {
   echo "<table class='initiativesTable'><tr><th>Initative</th><th>Budget</th><th>Impact Statement</th><th>Status</th></tr>";
 
-  while($row = odbc_fetch_array($initiative_result)) {
+  while($row = sqlsrv_fetch_array($initiative_result)) {
     echo '<script>console.log("'.$row['ID'].'")</script>';
     echo "<tr>";
     echo "<td><textarea name='init_values[1]'>".$row['Initiative']."</textarea></td>";
