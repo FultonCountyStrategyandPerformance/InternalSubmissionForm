@@ -9,7 +9,7 @@
     include('helpers/updateFunction.php');
 
     // Get result of update
-    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $performance_program_values_staging);
+    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'],$conn, $updateConn, $performance_program_values_staging);
 
     // Alert users to updated rows
     if($result) {
@@ -29,8 +29,8 @@
     include('helpers/updateFunction.php');
 
     // Get result of update
-    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $performance_program_values_staging);
-    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $performance_program_values);
+    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values_staging);
+    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values);
 
     // Alert users to updated rows
     if($result) {
@@ -83,11 +83,11 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
 
   // Get the Acceptable Values for count measures:
   // the average and standard deviation are used
-  /*include('helpers/acceptableValues.php');
-  $acceptable_values = acceptableValues($conn, $department_id, $performance_program_values_staging, $performance_program_kpis, $quarter, $fiscal_year);
+  //include('helpers/acceptableValues.php');
+  //$acceptable_values = acceptableValues($conn, $department_id, $performance_program_values_staging, $performance_program_kpis, $quarter, $fiscal_year);
+  $acceptable_values = array("118"=>array("Avg"=>10,"StdDev"=>4));
   echo "<script>
   $(document).ready(function(){
-    $('.validation').hover(function(){ $('.validtext').css('visibility','hidden');});
     var acceptableValues = ".json_encode($acceptable_values).";
     $('input[type=number]').change(function(e){
       console.log(e);
@@ -98,7 +98,7 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
       var min = 0;
       console.log(value);
       if(value < min || value > max) {
-        $('#'+measureId).hover(function(){ $('.validtext').css('visibility','visible'); });
+        $('#'+measureId).hover(function(){ $('#'+measureId+'-validtext.validtext').css('visibility','visible'); });
         $('#'+measureId).css('background-color','#ff9999');
       }
       else {
@@ -112,7 +112,7 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
       var min = parseFloat(acceptableValues[measureId]['Avg'])-parseFloat(acceptableValues[measureId]['StdDev']);
       var max = parseFloat(acceptableValues[measureId]['Avg'])+parseFloat(acceptableValues[measureId]['StdDev']);
       if(value < min || value > max) {
-        $('#'+measureId).hover(function(){ $('.validtext').css('visibility','visible');});
+        $('#'+measureId).hover(function(){ $('#'+measureId+'-validtext.validtext').css('visibility','visible');});
         $('#'+measureId).css('background-color','#ff9999');
       }
       else {
@@ -122,7 +122,6 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
     }
     });
   });</script>";
-  */
   // Department Selection Dropdown
   echo "Departments<br />";
   echo "<select name='department'>";

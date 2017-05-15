@@ -23,7 +23,7 @@ $performance_program_values = "edtables.dbo.PerformanceManagement_ProgramValues"
 // ADDITIONAL TABLES
 $performance_departments = "edtables.dbo.PerformanceManagement_Departments";
 $performance_program_kpis = "edtables.dbo.PerformanceManagement_ProgramKPIs";
-$performance_quarter_start_dates = "edtables.dbo.StartDates";
+$performance_quarter_start_dates = "edtables.dbo.PerformanceManagement_StartDates";
 $users_table = "edtables.dbo.PerformanceManagement_Users";
 
 // Include the connection string parameters
@@ -33,7 +33,7 @@ include('helpers/Connection.php');
 
 // Timelines
 include('helpers/getCurrentQuarter.php');
-$quarter = 1;//getCurrentQuarter($conn, $performance_quarter_start_dates);
+$quarter = getCurrentQuarter($conn, $performance_quarter_start_dates);
 
 $fiscal_year = date('Y', time());
 //echo $fiscal_year;

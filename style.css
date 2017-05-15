@@ -200,7 +200,7 @@ table.initiativesTable textarea {
 }
 
 .validation:hover .validtext {
-    visibility: visible;
+    visibility: hidden;
     opacity: 1;
 }
 
