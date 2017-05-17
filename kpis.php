@@ -50,8 +50,8 @@ echo "<div class='form-style-5'>";
 // Logout Form and link to initiatives
 echo "<form action='".htmlspecialchars($_SERVER['PHP_SELF'])."' method='post'>";
 echo "<div id='nav'><input class='submit' type='submit' value='logout' name='lgout'/>";
-echo "<a class='submit' href='initiatives.php' id='Link'>Initiative Submission</a></div>";
-echo "</form>";
+echo "<a class='submit' href='initiatives.php' id='Link'><div id='initiatives'>Initiative Submission <i class='fa fa-angle-double-right'></i></div></a>";
+echo "</div></form>";
 //
 // Start of the form to update the database
 echo "<form name='kpiform' action='".htmlspecialchars($_SERVER["PHP_SELF"])."' method='post' autocomplete='off' onsubmit=''>";

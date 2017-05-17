@@ -2,6 +2,7 @@
 // CSS and JS
 echo "<html><head>";
 echo "<link rel='stylesheet' href='style.css' type='text/css'>";
+echo "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>";
 echo "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>";
 echo '<script src="javascript/jquery-3.2.0.min.js"></script>';
 echo "</head><body>";

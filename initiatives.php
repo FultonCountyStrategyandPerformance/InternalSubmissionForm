@@ -2,6 +2,7 @@
 // CSS and JS
 echo "<html><head>";
 echo "<link rel='stylesheet' href='style.css' type='text/css'>";
+echo "<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>";
 echo "<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>";
 echo '<script src="javascript/jquery-3.2.0.min.js"></script>';
 echo "</head><body>";
@@ -14,11 +15,11 @@ include('helpers/Connection.php');
 
 // Database tables
 // Staging Table
-$performance_program_initiatives_staging = "fulton_county.dbo.PerformanceManagement_Initiatives_staging";
+$performance_program_initiatives_staging = "PerformanceManagement_Initiatives_staging";
 // Production Data table
-$performance_program_initiatives = "fulton_county.dbo.PerformanceManagement_Initiatives";
+$performance_program_initiatives = "PerformanceManagement_KeyInitiatives";
 // Start Dates
-$performance_quarter_start_dates = "StartDates";
+$performance_quarter_start_dates = "PerformanceManagement_StartDates";
 
 // Set Constants
 include('helpers/getCurrentQuarter.php');
@@ -83,8 +84,12 @@ if(isset($_POST['adminsubmit'])) {
 
 $initiative_query = "SELECT * FROM ".$performance_program_initiatives;
 $initiative_result = sqlsrv_query($conn, $initiative_query);
-if(!$initiative_result) {
-  echo sqlsrv_errors();
+if( ($errors = sqlsrv_errors() ) != null) {
+    foreach( $errors as $error ) {
+        echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+        echo "code: ".$error[ 'code']."<br />";
+        echo "message: ".$error[ 'message']."<br />";
+    }
 }
 
 if(isset($_POST['initiative'])) {
@@ -94,7 +99,7 @@ if(isset($_POST['initiative'])) {
 echo '<div class="form-style-5" style="max-width:75%">';
 echo "<form id='initativeForm' action='".htmlspecialchars($_SERVER["PHP_SELF"])."' method='post' autocomplete='off'>";
 // Link back to Dept Measures
-echo '<div id="info" style="text-align:center"><a href="index.php" id="Link">To Department Measures</a>';
+echo '<div id="info" style="text-align:center"><a class="submit" href="index.php" id="Link"><div id="initiatives"><i class="fa fa-angle-double-left"></i>   Department Submission</div></a>';
 
 // Display Fiscal year and Quarter
 echo '<div id="nav" style="text-align:center"><div id="quarter"><h3>Current Quarter</h3> Q'.$quarter.'</div>';
