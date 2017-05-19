@@ -1,6 +1,6 @@
 <?php
 // Server Settings
-$connectionInfo = array("UID"=>"GISViewer", "PWD"=>"gisviewer","Database"=>"edtables");
+$connectionInfo = array("UID"=>"", "PWD"=>"","Database"=>"");
 $serverName="GISPubDb";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 if(!$conn) {
@@ -13,7 +13,7 @@ if(!$conn) {
   }
 }
 
-$updateInfo = array("UID"=>"GISWebEditor", "PWD"=>"giswebeditor","Database"=>"edtables");
+$updateInfo = array("UID"=>"", "PWD"=>"","Database"=>"");
 $updateConn = sqlsrv_connect($serverName, $updateInfo);
 if(!$updateConn) {
   if( ($errors = sqlsrv_errors() ) != null) {
