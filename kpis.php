@@ -29,9 +29,10 @@
     include('helpers/updateFunction.php');
 
     // Get result of update
-    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values_staging);
-    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values);
-
+    //list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values_staging);
+    //list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values);
+    $result = True;
+    $rows_updated = 1;
     // Alert users to updated rows
     if($result) {
       if($rows_updated == 0) {
@@ -134,9 +135,43 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
   // Autofill with login value
   echo "Editor<br>   <input type='text' name='username' placeholder='Editor' value='".$_SESSION['username']."' readonly /><br>";
 
-
-  echo '<div id="info"><div id="quarter"><h3>Current Quarter</h3> Q'.$quarter.'</div>';
-  echo '<div><h3>Current Fiscal Year</h3> FY '.$fiscal_year.'</div></div>';
+  $historical = 1;
+  if($historical == 1) {
+    if(isset($_POST["quarter"])) {
+      $curr_quarter = $_POST["quarter"];
+    }
+    if(isset($_POST["year"])) {
+      $curr_year = $_POST["year"];
+    }
+    $quarters = array(1,2,3,4);
+    $fiscal_years = array(2015,2016,2017);
+    echo '<div id="info"><div id="quarter"><h3>Quarter</h3>';
+    echo '<select name="quarter" onchange="this.form.submit()">';
+    foreach ($quarters as $q) {
+      if($q == $curr_quarter) {
+        echo '<option value='.$q.' selected>Q'.$q.'</option>';
+      }
+      else {
+        echo '<option value='.$q.'>Q'.$q.'</option>';
+      }
+    }
+    echo '</select></div>';
+    echo '<div id="quarter"><h3>Fiscal Year</h3>';
+    echo '<select name="year" onchange="this.form.submit()">';
+    foreach ($fiscal_years as $y) {
+      if($y == $curr_year) {
+        echo '<option value='.$y.' selected>FY '.$y.'</option>';
+      }
+      else {
+        echo '<option value='.$y.'>FY '.$y.'</option>';
+      }
+    }
+    echo '</select></div></div>';
+  }
+  else {
+    echo '<div id="info"><div id="quarter"><h3>Current Quarter</h3> Q'.$quarter.'</div>';
+    echo '<div><h3>Current Fiscal Year</h3> FY '.$fiscal_year.'</div></div>';
+  }
 echo "</fieldset><br />";
 
 

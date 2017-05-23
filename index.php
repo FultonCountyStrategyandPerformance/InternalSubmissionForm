@@ -34,9 +34,9 @@ include('helpers/Connection.php');
 
 // Timelines
 include('helpers/getCurrentQuarter.php');
-$quarter = getCurrentQuarter($conn, $performance_quarter_start_dates);
+$curr_quarter = getCurrentQuarter($conn, $performance_quarter_start_dates);
 
-$fiscal_year = date('Y', time());
+$curr_year = date('Y', time());
 //echo $fiscal_year;
 $kpi_values = array();
 

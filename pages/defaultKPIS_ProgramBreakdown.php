@@ -38,8 +38,8 @@
           $grid = "<table><tr><th>Measure</th><th>Value</th><th>Unit</th></tr>";
           while($row = sqlsrv_fetch_array($kpi_result)) {
                $q = "SELECT * FROM ".$performance_program_values_staging."
-                    WHERE  Year =".$fiscal_year."
-                    AND Quarter =".$quarter."
+                    WHERE  Year =".$curr_year."
+                    AND Quarter =".$curr_quarter."
                     AND MeasureID = ".round($row['MeasureID']);
                 $r = sqlsrv_query($conn, $q);
                 if( ($errors = sqlsrv_errors() ) != null) {
