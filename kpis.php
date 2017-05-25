@@ -53,9 +53,16 @@ echo "<a class='submit' href='initiatives.php' id='Link'><div id='initiatives'>I
 echo "</div></form>";
 //
 // Start of the form to update the database
-echo "<form name='kpiform' action='".htmlspecialchars($_SERVER["PHP_SELF"])."' method='post' autocomplete='off' onsubmit=''>";
+echo "<form id='kpiform' name='kpiform' action='".htmlspecialchars($_SERVER["PHP_SELF"])."' method='post' autocomplete='off' onsubmit=''>";
 // GENERAL INFORMATION
 echo '<fieldset><legend><span class="number">1</span> General Information</legend>';
+echo "<script>function dropdown() {
+  if(window.confirm('Data entered will be lost if you have not pressed save, continue?')==true) {
+    $('#kpiform').submit();
+  }
+  else {
+    return;
+  }}</script>";
 
 //Get the departments for that priority as a dropdown
   // The department query
@@ -104,7 +111,7 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
     }
     // Department Selection Dropdown
     echo "Departments<br />";
-    echo "<select name='department' onchange='this.form.submit()'>";
+    echo "<select name='department' onchange='dropdown()'>";
     $menu = "";
     while($row = sqlsrv_fetch_array($department_result)) {
       if(isset($_POST["department"])) {
@@ -123,8 +130,6 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
     }
     echo $menu;
     echo "</select><br>";
-
-
   }
   else {
     die();
@@ -186,7 +191,7 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
     $quarters = array(1,2,3,4);
     $fiscal_years = array(2015,2016,2017);
     echo '<div id="info"><div id="quarter"><h3>Quarter</h3>';
-    echo '<select name="quarter" onchange="this.form.submit()">';
+    echo '<select name="quarter" onchange="dropdown()">';
     foreach ($quarters as $q) {
       if($q == $curr_quarter) {
         echo '<option value='.$q.' selected>Q'.$q.'</option>';
@@ -197,7 +202,7 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
     }
     echo '</select></div>';
     echo '<div id="quarter"><h3>Fiscal Year</h3>';
-    echo '<select name="year" onchange="this.form.submit()">';
+    echo '<select name="year" onchange="dropdown()">';
     foreach ($fiscal_years as $y) {
       if($y == $curr_year) {
         echo '<option value='.$y.' selected>FY '.$y.'</option>';
