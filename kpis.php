@@ -9,7 +9,7 @@
     include('helpers/updateFunction.php');
 
     // Get result of update
-    list($result, $rows_updated) = updateKPI($curr_year, $curr_quarter, $_SESSION['username'], $_POST['kpi_values'],$conn, $updateConn, $performance_program_values_staging);
+    list($result, $rows_updated) = updateKPI($_POST['year'], $_POST['quarter'], $_SESSION['username'], $_POST['kpi_values'],$conn, $updateConn, $performance_program_values_staging);
 
     // Alert users to updated rows
     if($result) {
@@ -29,8 +29,8 @@
     include('helpers/updateFunction.php');
 
     // Get result of update
-    list($result, $rows_updated) = updateKPI($curr_year, $curr_quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values_staging);
-    list($result, $rows_updated) = updateKPI($curr_year, $curr_quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values);
+    list($result, $rows_updated) = updateKPI($_POST['year'], $_POST['quarter'], $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values_staging);
+    list($result, $rows_updated) = updateKPI($_POST['year'], $_POST['quarter'], $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values);
     // Alert users to updated rows
     if($result) {
       if($rows_updated == 0) {
