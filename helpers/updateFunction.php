@@ -88,6 +88,31 @@ function diff($table,$fiscal_year, $quarter, $measureID, $value, $conn) {
     }
   }
   return true;
-
 }
+
+function testUpdateKPI($fiscal_year, $quarter, $editor, $value_array, $conn, $updateConn, $table) {
+  // Handle the submission datetime
+  date_default_timezone_set("America/New_York");
+  $current_date_time = Date('Y-m-d H:i:s');
+
+  // Create query strings and do the update
+  $rows_updated = 0;
+  foreach ($value_array as $key => $value) {
+    $update_string = "";
+    // Check to see what values have been updated
+    if(diff($table,$fiscal_year, $quarter, $key, $value, $conn)) {
+      $update_string = constructKPIQuery($table,$fiscal_year,
+                                          $quarter,
+                                          $current_date_time ,
+                                          $editor,
+                                          $key,
+                                          $value);
+      echo '<script>console.log("'.$update_string.'")</script>';
+    }
+    else {
+      return array(true, 0);
+    }
+  }
+}
+
 ?>

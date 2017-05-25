@@ -42,7 +42,6 @@
                     WHERE  Year =".$curr_year."
                     AND Quarter =".$curr_quarter."
                     AND MeasureID = ".round($row['MeasureID']);
-                echo "<script>console.log(`".$q."`)</script>";
                 $r = sqlsrv_query($conn, $q);
                 if( ($errors = sqlsrv_errors() ) != null) {
                     foreach( $errors as $error ) {

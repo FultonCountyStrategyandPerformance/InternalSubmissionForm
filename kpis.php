@@ -9,7 +9,7 @@
     include('helpers/updateFunction.php');
 
     // Get result of update
-    list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'],$conn, $updateConn, $performance_program_values_staging);
+    list($result, $rows_updated) = updateKPI($curr_year, $curr_quarter, $_SESSION['username'], $_POST['kpi_values'],$conn, $updateConn, $performance_program_values_staging);
 
     // Alert users to updated rows
     if($result) {
@@ -29,10 +29,8 @@
     include('helpers/updateFunction.php');
 
     // Get result of update
-    //list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values_staging);
-    //list($result, $rows_updated) = updateKPI($fiscal_year, $quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values);
-    $result = True;
-    $rows_updated = 1;
+    list($result, $rows_updated) = updateKPI($curr_year, $curr_quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values_staging);
+    list($result, $rows_updated) = updateKPI($curr_year, $curr_quarter, $_SESSION['username'], $_POST['kpi_values'], $conn, $updateConn, $performance_program_values);
     // Alert users to updated rows
     if($result) {
       if($rows_updated == 0) {
@@ -62,24 +60,74 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
 //Get the departments for that priority as a dropdown
   // The department query
   $user_department = $_SESSION['department'];
-  $departments = "SELECT *
-        FROM ".$performance_departments."
-        WHERE DepartmentID = ".round($user_department)."
-        ORDER BY DepartmentID ASC";
-  echo "<script>console.log(`".$departments."`);</script>";
-  $department_result = sqlsrv_query($conn, $departments);
-  // Handle execution error
-  if( ($errors = sqlsrv_errors() ) != null) {
-    echo "ERROR GETTING DEPARTMENT RESULT";
-      foreach( $errors as $error ) {
-          echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
-          echo "code: ".$error[ 'code']."<br />";
-          echo "message: ".$error[ 'message']."<br />";
-      }
+  // Logic for regular users:
+  if($user_department != 0) {
+    $departments = "SELECT *
+          FROM ".$performance_departments."
+          WHERE DepartmentID = ".round($user_department)."
+          ORDER BY DepartmentID ASC";
+    $department_result = sqlsrv_query($conn, $departments);
+    // Handle execution error
+    if( ($errors = sqlsrv_errors() ) != null) {
+      echo "ERROR GETTING DEPARTMENT RESULT";
+        foreach( $errors as $error ) {
+            echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+            echo "code: ".$error[ 'code']."<br />";
+            echo "message: ".$error[ 'message']."<br />";
+        }
+    }
+    while($row = sqlsrv_fetch_array($department_result)) {
+      $department_id = $row["DepartmentID"];
+      $department_name = $row["Department"];
+    }
+    // Department Selection Dropdown
+    echo "Departments<br />";
+    echo "<select name='department'>";
+
+    $menu = '<option value="'.$department_id.'" selected="selected">'.$department_name."</option>";
+    echo $menu;
+    echo "</select><br>";
   }
-  while($row = sqlsrv_fetch_array($department_result)) {
-    $department_id = $row["DepartmentID"];
-    $department_name = $row["Department"];
+  if($user_department == 0) {
+    $departments = "SELECT *
+          FROM ".$performance_departments."
+          ORDER BY DepartmentID ASC";
+    $department_result = sqlsrv_query($conn, $departments);
+    // Handle execution error
+    if( ($errors = sqlsrv_errors() ) != null) {
+      echo "ERROR GETTING DEPARTMENT RESULT";
+        foreach( $errors as $error ) {
+            echo "SQLSTATE: ".$error[ 'SQLSTATE']."<br />";
+            echo "code: ".$error[ 'code']."<br />";
+            echo "message: ".$error[ 'message']."<br />";
+        }
+    }
+    // Department Selection Dropdown
+    echo "Departments<br />";
+    echo "<select name='department' onchange='this.form.submit()'>";
+    $menu = "";
+    while($row = sqlsrv_fetch_array($department_result)) {
+      if(isset($_POST["department"])) {
+        $department_id = $_POST["department"];
+        if($row['DepartmentID'] == $_POST["department"]) {
+          $menu .= '<option value="'.$row["DepartmentID"].'" selected="selected">'.$row["Department"]."</option>";
+        }
+        else {
+          $menu .= '<option value="'.$row["DepartmentID"].'">'.$row["Department"]."</option>";
+        }
+      }
+      else {
+        $menu .= '<option value="'.$row["DepartmentID"].'" selected="selected">'.$row["Department"]."</option>";
+        $department_id = $row["DepartmentID"];
+      }
+    }
+    echo $menu;
+    echo "</select><br>";
+
+
+  }
+  else {
+    die();
   }
 
   // Get the Acceptable Values for count measures:
@@ -123,19 +171,11 @@ echo '<fieldset><legend><span class="number">1</span> General Information</legen
     }
     });
   });</script>";
-  // Department Selection Dropdown
-  echo "Departments<br />";
-  echo "<select name='department'>";
-
-  $menu = '<option value="'.$department_id.'" selected="selected">'.$department_name."</option>";
-  echo $menu;
-  echo "</select><br>";
 
   // Submitter of the form
   // Autofill with login value
   echo "Editor<br>   <input type='text' name='username' placeholder='Editor' value='".$_SESSION['username']."' readonly /><br>";
 
-  $historical = 1;
   if($historical == 1) {
     if(isset($_POST["quarter"])) {
       $curr_quarter = $_POST["quarter"];

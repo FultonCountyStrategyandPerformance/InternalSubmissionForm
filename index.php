@@ -12,6 +12,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 'on');
 date_default_timezone_set("America/New_York");
 // Constants
+$historical = 1;
 $percent_warning_text = "Warn: Percent over 100";
 $count_warning_text = "Warn: Number significantly different from the average";
 // Database tables
