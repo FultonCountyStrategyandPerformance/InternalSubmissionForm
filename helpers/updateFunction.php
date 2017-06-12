@@ -19,7 +19,7 @@ function updateKPI($fiscal_year, $quarter, $editor, $value_array, $conn, $update
                                         $key,
                                         $value);
       }
-
+      echo "<script>console.log(`".$update_string."`)</script>";
       $update_result = sqlsrv_query($updateConn, $update_string, array(), array("Scrollable"=>"static"));
       // Check for Errors
       if( ($errors = sqlsrv_errors() ) != null) {
@@ -46,6 +46,9 @@ function updateKPI($fiscal_year, $quarter, $editor, $value_array, $conn, $update
 // Query String Constructor
 function constructKPIQuery($table,$fiscal_year, $quarter, $date, $editor, $measureID, $value) {
   // Check if Value exists
+  if($value == "") {
+    $value = "NULL";
+  }
   $query = "IF EXISTS (SELECT *
         FROM ".$table."
         WHERE Year = ".$fiscal_year."
@@ -66,9 +69,6 @@ function constructKPIQuery($table,$fiscal_year, $quarter, $date, $editor, $measu
 
 // DIFF FUNCTION
 function diff($table,$fiscal_year, $quarter, $measureID, $value, $conn) {
-  if($value == "") {
-    return false;
-  }
   $current_value_query = "SELECT Value
       FROM ".$table."
       WHERE Year = ".$fiscal_year." AND Quarter = ".$quarter."

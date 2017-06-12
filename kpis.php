@@ -152,7 +152,7 @@ echo "<script>function dropdown() {
       var min = 0;
       console.log(value);
       if(value < min || value > max) {
-        $('#'+measureId).hover(function(){ $('#'+measureId+'-validtext.validtext').css('visibility','visible'); });
+        $('#'+measureId).hover(function(){ $('#'+measureId+'-validtext').css('visibility','visible'); });
         $('#'+measureId).css('background-color','#ff9999');
       }
       else {
@@ -166,7 +166,7 @@ echo "<script>function dropdown() {
       var min = parseFloat(acceptableValues[measureId]['Avg'])-parseFloat(acceptableValues[measureId]['StdDev']);
       var max = parseFloat(acceptableValues[measureId]['Avg'])+parseFloat(acceptableValues[measureId]['StdDev']);
       if(value < min || value > max) {
-        $('#'+measureId).hover(function(){ $('#'+measureId+'-validtext.validtext').css('visibility','visible');});
+        $('#'+measureId).hover(function(){ $('#'+measureId+'-validtext').css('visibility','visible');});
         $('#'+measureId).css('background-color','#ff9999');
       }
       else {

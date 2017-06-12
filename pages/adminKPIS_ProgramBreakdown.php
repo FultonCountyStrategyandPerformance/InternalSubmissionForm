@@ -55,20 +55,20 @@
                   $grid .= "<tr><td style='width:100%' class='tooltip'>".$row['MeasureName']."<span class='tooltiptext'>".$row['Description']."</span></td><td class='validation' style='width:40%'>";
                   // If it has a value round it, if it doesn't make it an empty string
                   if(round($v['Value']) != 0) {
-                    $grid .= "<input id='".round($row['MeasureID'])."' class='percent' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".round($v['Value'])."'/><span class='validtext'>".$percent_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
+                    $grid .= "<input id='".round($row['MeasureID'])."' class='percent' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".round($v['Value'],2)."'/><span class='validtext' id='".round($row['MeasureID'])."-validtext'>".$percent_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
                   }
                   else {
-                    $grid .= "<input id='".round($row['MeasureID'])."' class='percent' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".$v['Value']."'/><span class='validtext'>".$percent_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
+                    $grid .= "<input id='".round($row['MeasureID'])."' class='percent' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".$v['Value']."'/><span class='validtext' id='".round($row['MeasureID'])."-validtext'>".$percent_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
                   }
                 }
                 else {
                     $grid .= "<tr><td style='width:100%' class='tooltip'>".$row['MeasureName']."<span class='tooltiptext'>".$row['Description']."</span></td><td class='validation' style='width:40%'>";
                   // If it has a value round it, if it doesn't make it an empty string
                   if (round($v['Value']) != 0){
-                   $grid .= "<input id='".round($row['MeasureID'])."' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".round($v['Value'])."'/><span class='validtext'>".$count_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
+                   $grid .= "<input id='".round($row['MeasureID'])."' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".round($v['Value'],2)."'/><span class='validtext' id='".round($row['MeasureID'])."-validtext'>".$count_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
                   }
                   else {
-                    $grid .= "<input id='".round($row['MeasureID'])."' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".$v['Value']."'/><span class='validtext'>".$count_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
+                    $grid .= "<input id='".round($row['MeasureID'])."' name='kpi_values[".round($row['MeasureID'])."]' type='number' step='any' value='".$v['Value']."'/><span class='validtext' id='".round($row['MeasureID'])."-validtext'>".$count_warning_text."</span></td><td style='width:10%' id='unit'>".$row["MeasureUnit"]."</td></tr>";
                   }
                 }
 
