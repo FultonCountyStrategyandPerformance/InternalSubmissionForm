@@ -44,6 +44,8 @@
   }
 
 //
+echo '<h1 style="text-align:center">Departmental Performance Reporting System</h1>';
+echo '<div id="img"><img src="images/logo.png" /></div>';
 echo "<div class='form-style-5'>";
 //
 // Logout Form and link to initiatives

@@ -64,14 +64,17 @@ table.initiativesTable textarea {
   float:left;
   width:50%;
 }
-
+#img {
+  margin:auto;
+  width:5%;
+}
 .form-style-5{
     max-width: 700px;
     padding: 10px 20px;
-    background: #f4f7f8;
+    background: #e2e2e2;
     margin: 10px auto;
     padding: 20px;
-    background: #f4f7f8;
+    background: #e2e2e2;
     border-radius: 8px;
     font-family: Georgia, "Times New Roman", Times, serif;
 }
@@ -111,7 +114,7 @@ table.initiativesTable textarea {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     background-color: #e8eeef;
-    color:#8a97a0;
+    color:#646b70;
     -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     box-shadow: 0 1px 0 rgba(0,0,0,0.03) inset;
     margin-bottom: 30px;
