@@ -2,7 +2,7 @@
     // Get all the KPI measure IDs and Names
     $programs = "SELECT Program
       FROM ".$performance_program_kpis."
-      WHERE DepartmentID=".round($department_id)." and AND Active=1
+      WHERE DepartmentID=".round($department_id)." AND Active=1
       GROUP BY Program";
 
     $program_result = sqlsrv_query($conn, $programs);
