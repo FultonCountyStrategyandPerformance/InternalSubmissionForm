@@ -73,7 +73,7 @@ echo "<script>function dropdown() {
   // The department query
   $user_department = $_SESSION['department'];
   // Logic for regular users:
-  if($user_department != 0) {
+  if($user_department > 0) {
     $departments = "SELECT *
           FROM ".$performance_departments."
           WHERE DepartmentID = ".round($user_department)."
@@ -136,9 +136,6 @@ echo "<script>function dropdown() {
     echo $menu;
     echo "</select><br>";
   }
-  else {
-    die();
-  }
 
   // Get the Acceptable Values for count measures:
   // the average and standard deviation are used
@@ -181,7 +178,6 @@ echo "<script>function dropdown() {
     }
     });
   });</script>";
-
   // Submitter of the form
   // Autofill with login value
   echo "Editor<br>   <input type='text' name='username' placeholder='Editor' value='".$_SESSION['username']."' readonly /><br>";
