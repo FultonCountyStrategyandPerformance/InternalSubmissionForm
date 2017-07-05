@@ -1,6 +1,6 @@
 <?php
 function getCurrentQuarter($conn, $performance_quarter_start_dates) {
-    $quarter_query = "SELECT Quarter, DAY(StartDate) as day, MONTH(StartDate) as month FROM ".$performance_quarter_start_dates;
+    $quarter_query = "SELECT Quarter, DAY(InitiativeEndDate) as day, MONTH(InitiativeEndDate) as month FROM ".$performance_quarter_start_dates;
     $quarter_result = sqlsrv_query($conn, $quarter_query);
 
     // Check for Errors
